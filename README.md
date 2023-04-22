@@ -1,5 +1,7 @@
 # Resource
 
+[![Elixir CI](https://github.com/iamafanasyev/resource/actions/workflows/elixir.yml/badge.svg)](https://github.com/iamafanasyev/resource/actions/workflows/elixir.yml)
+
 **TODO: Add description**
 
 ## Installation
