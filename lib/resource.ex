@@ -30,20 +30,17 @@ defmodule Resource do
   So plug in the library, and you get a way to safely combine resources using for-comprehension:
 
         iex> import ExUnit.CaptureIO, only: [capture_io: 1]
-        ...> import Resource, only: [create: 1]
-        ...> require Bindable.ForComprehension
+        ...> import Bindable.ForComprehension, only: [bindable: 1]
+        ...> import Resource, only: [create: 1, use!: 2]
         ...>
         ...> summation =
-        ...>   Bindable.ForComprehension.for {
-        ...>     x <- create(acquire: fn -> IO.puts("Acquire x"); 1 end, release: fn _ -> IO.puts("Release x") end),
-        ...>     y <- create(acquire: fn -> IO.puts("Acquire y"); 2 end, release: fn _ -> IO.puts("Release y") end)
-        ...>   } do
-        ...>     x + y
-        ...>   end
+        ...>   bindable for x <- create(acquire: fn -> IO.puts("Acquire x"); 1 end, release: fn _ -> IO.puts("Release x") end),
+        ...>                y <- create(acquire: fn -> IO.puts("Acquire y"); 2 end, release: fn _ -> IO.puts("Release y") end),
+        ...>                do: x + y
         ...>
         ...> capture_io fn ->
         ...>   assert_raise RuntimeError, "Boom", fn ->
-        ...>     Resource.use!(summation, fn _sum -> raise "Boom" end)
+        ...>     use!(summation, fn _sum -> raise "Boom" end)
         ...>   end
         ...> end
         "Acquire x\\nAcquire y\\nRelease y\\nRelease x\\n"

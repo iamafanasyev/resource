@@ -31,17 +31,15 @@ To do so it provides both `Bindable.FlatMap` and `Bindable.Pure` implementations
 So plug in the library, and you get a way to safely combine resources using for-comprehension:
 
 ```elixir
-require Bindable.ForComprehension
+import Bindable.ForComprehension
+import Resource
 
 summation =
-  Bindable.ForComprehension.for {
-    x <- create(acquire: fn -> IO.puts("Acquire x"); 40 end, release: fn _ -> IO.puts("Release x") end),
-    y <- create(acquire: fn -> IO.puts("Acquire y"); 2 end, release: fn _ -> IO.puts("Release y") end)
-  } do
-    x + y
-  end
+  bindable for x <- create(acquire: fn -> IO.puts("Acquire x"); 40 end, release: fn _ -> IO.puts("Release x") end),
+               y <- create(acquire: fn -> IO.puts("Acquire y"); 2 end, release: fn _ -> IO.puts("Release y") end),
+               do: x + y
 
-Resource.use!(summation, fn sum -> IO.puts("Use sum"); {sum} end)
+use!(summation, fn sum -> IO.puts("Use sum"); {sum} end)
 ```
 
 
@@ -52,7 +50,7 @@ The package can be installed by adding `resource` to your list of dependencies i
 ```elixir
 def deps do
   [
-    {:resource, "~> 0.1.0"}
+    {:resource, "~> 1.0.0"}
   ]
 end
 ```
