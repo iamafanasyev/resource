@@ -68,7 +68,7 @@ defmodule Resource do
   @doc """
   Resource "data type constructor".
   """
-  @spec create(acquire: (() -> a), release: (a -> unit())) :: t(a) when a: var
+  @spec create(acquire: (-> a), release: (a -> unit())) :: t(a) when a: var
   def create(_acquire_and_release_phases = [acquire: acquire, release: release]) do
     %__MODULE__{
       singleton_stream:
