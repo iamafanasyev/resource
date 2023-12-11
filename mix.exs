@@ -24,7 +24,7 @@ defmodule Resource.MixProject do
 
   defp deps() do
     [
-      {:bindable, "~> 1.0.0"},
+      {:bindable, "~> 1.1.0"},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false}
     ]
   end
