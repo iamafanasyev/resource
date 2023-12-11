@@ -2,7 +2,7 @@ defmodule Resource.MixProject do
   use Mix.Project
 
   @name "Resource"
-  @version "1.0.0"
+  @version "1.0.1"
   @description "A common pattern to acquire a resource, perform some action on it and then run a finalizer, regardless of the outcome of the action"
   @repo_url "https://github.com/iamafanasyev/resource"
 
